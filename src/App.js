@@ -1,19 +1,34 @@
-import React, { Component } from 'react';
-import Contacts from './Components/Contacts';
-import Header from './Components/Header';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Contacts from "./Components/contacts/Contacts";
+import Header from "./Components/layout/Header";
+import About from "./Components/pages/About";
+import NotFound from "./Components/pages/NotFound";
+import AddContact from "./Components/contacts/AddContact";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import { Provider } from "./Context";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Header branding="Contact Manager" />
-        <div className="container">
-          <Contacts />
-        </div>
-      </div>
+      <Provider>
+        <Router>
+          <div className="App">
+            <Header branding="Contact Manager" />
+            <div className="container">
+              <Switch>
+                <Route exact path="/" component={Contacts} />
+                <Route exact path="/contact/add" component={AddContact} />
+                <Route exact path="/about" component={About} />
+                <Route component={NotFound} />
+              </Switch>
+            </div>
+          </div>
+        </Router>
+      </Provider>
     );
   }
 }

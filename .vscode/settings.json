@@ -1,12 +1,1 @@
-{
-  "editor.formatOnSave": true,
-  "prettier.singleQuote": true,
-  "liveServer.settings.donotShowInfoMsg": true,
-  "emmet.includeLanguages": {
-    "javascript": "javascriptreact"
-  },
-  "emmet.syntaxProfiles": {
-    "javascript": "jsx",
-    "javascript": "html"
-  }
-}
+{}
