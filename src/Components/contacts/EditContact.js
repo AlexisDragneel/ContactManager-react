@@ -9,7 +9,18 @@ class EditContact extends Component {
     phone: "",
     errors: {}
   };
-
+  async componentDidMount() {
+    const { id } = this.props.match.params;
+    const res = await axios.get(
+      `https://jsonplaceholder.typicode.com/users/${id}`
+    );
+    const { name, email, phone } = res.data;
+    this.setState({
+      name,
+      email,
+      phone
+    });
+  }
   onSubmit = async (dispatch, e) => {
     e.preventDefault();
 
@@ -30,6 +41,15 @@ class EditContact extends Component {
       this.setState({ errors: { phone: "Phone is required" } });
       return;
     }
+    const { id } = this.props.match.params;
+    const updContact = { name, email, phone };
+    const res = await axios.put(
+      `https://jsonplaceholder.typicode.com/users/${id}`,
+      updContact
+    );
+
+    dispatch({ type: "UPDATE_CONTACT", payload: res.data });
+
     //clear inputs
     this.setState({ name: "", email: "", phone: "", errors: {} });
 
@@ -48,7 +68,7 @@ class EditContact extends Component {
           const { dispatch } = value;
           return (
             <div className="card mb-3">
-              <div className="card-header">Add Contact</div>
+              <div className="card-header">Edit Contact</div>
               <div className="card-body">
                 <form onSubmit={this.onSubmit.bind(this, dispatch)}>
                   <TextInputGroup
@@ -80,7 +100,7 @@ class EditContact extends Component {
 
                   <input
                     type="submit"
-                    value="Add Contact"
+                    value="Update Contact"
                     className="btn btn-light btn-block"
                   />
                 </form>
